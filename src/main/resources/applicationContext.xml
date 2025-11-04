@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa
+        https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <!-- ==================== Property Placeholder ==================== -->
+    <context:property-placeholder location="classpath:application.yaml"/>
+
+    <!-- ==================== DataSource ==================== -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="username" value="${spring.datasource.username}"/>
+        <property name="password" value="${spring.datasource.password}"/>
+    </bean>
+
+    <!-- ==================== EntityManagerFactory ==================== -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.transports.transport.entities"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+                <property name="generateDdl" value="true"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- ==================== Transaction Manager ==================== -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- ==================== Spring Data JPA Repositories ==================== -->
+    <jpa:repositories
+            base-package="com.transports.transport.repository"
+            entity-manager-factory-ref="entityManagerFactory"
+            transaction-manager-ref="transactionManager"/>
+
+
+    <!-- ==================== Service Beans ==================== -->
+    <bean id="deliveryService" class="com.transports.transport.service.DeliveryService">
+        <constructor-arg ref="deliveryRepository"/>
+    </bean>
+    <bean id="tourService" class="com.transports.transport.service.TourService">
+        <constructor-arg ref="tourRepository"/>
+    </bean>
+    <bean id="vehiculService" class="com.transports.transport.service.VehiculService">
+        <constructor-arg ref="vehiculRepository"/>
+    </bean>
+    <bean id="warehouseService" class="com.transports.transport.service.WarehouseService">
+        <constructor-arg ref="warehouseRepository"/>
+    </bean>
+    <bean id="deliveryMapper" class="com.transports.transport.MapperImplementation.DeliveryMapperImpl" />
+    <bean id="tourMapper" class="com.transports.transport.MapperImplementation.TourMapperImpl" />
+    <bean id="vehiculMapper" class="com.transports.transport.MapperImplementation.VehiculMapperImpl" />
+    <bean id="warehouseMapper" class="com.transports.transport.MapperImplementation.WarehouseImpl" />
+
+
+    <bean id="deliveryController" class="com.transports.transport.controllers.DeliveryController" >
+        <constructor-arg ref="deliveryService"/>
+        <constructor-arg ref="deliveryMapper"/>
+    </bean>
+    <bean id="tourController" class="com.transports.transport.controllers.TourController">
+        <constructor-arg ref="tourService"/>
+        <constructor-arg ref="tourMapper"/>
+    </bean>
+    <bean id="vehiculController" class="com.transports.transport.controllers.VehiculController">
+        <constructor-arg ref="vehiculService"/>
+        <constructor-arg ref="vehiculMapper"/>
+    </bean>
+    <bean id="warehouseController" class="com.transports.transport.controllers.WarehouseController">
+        <constructor-arg ref="warehouseService"/>
+        <constructor-arg ref="warehouseMapper"/>
+    </bean>
+
+
+
+</beans>

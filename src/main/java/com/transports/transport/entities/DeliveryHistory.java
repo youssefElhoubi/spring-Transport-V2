@@ -11,13 +11,12 @@ import java.time.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DeliveryHistory {
+    public class DeliveryHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // --- RELATIONS ---
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -27,25 +26,23 @@ public class DeliveryHistory {
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
-    // --- DELIVERY DATA ---
 
     @Column(nullable = false)
-    private LocalDate date; // delivery date (e.g., 2025-11-03)
+    private LocalDate date;
 
     @Column(name = "planned_time")
-    private LocalTime plannedTime; // expected delivery time
+    private LocalTime plannedTime;
 
     @Column(name = "actual_time")
-    private LocalTime actualTime; // real delivery time
+    private LocalTime actualTime;
 
     @Column(name = "delay_minutes")
-    private Long delay; // actualTime - plannedTime (in minutes)
+    private Long delay;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week", length = 10)
-    private DayOfWeek dayOfWeek; // e.g., MONDAY, TUESDAY...
+    private DayOfWeek dayOfWeek;
 
-    // --- METHODS ---
 
     public void calculateDelay() {
         if (plannedTime != null && actualTime != null) {

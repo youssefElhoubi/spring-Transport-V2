@@ -24,4 +24,6 @@ public class Customer {
     private LocalDateTime preferredTimeSlot;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Delivery> deliveries;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Delivery> deliveriesHistory;
 }

@@ -1,13 +1,10 @@
 package com.transports.transport.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +21,7 @@ public class User {
     private Double latitude;
     private Double longitude;
     private LocalDateTime preferredTimeSlot;
+
+    @OneToMany
+    List<Delivery> deliveries;
 }

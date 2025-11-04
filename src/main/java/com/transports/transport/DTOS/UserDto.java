@@ -2,9 +2,17 @@ package com.transports.transport.DTOS;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Component
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDto {
     public interface create {
     }

@@ -40,14 +40,14 @@ public class TourOptimizer {
             double finalCurrentLon = currentLon;
             Delivery nearest = deliveries.stream()
                     .min(Comparator.comparingDouble(d ->
-                            haversine(finalCurrentLat, finalCurrentLon, d.getLatitude(), d.getLongitude())))
+                            haversine(finalCurrentLat, finalCurrentLon, d.getUser().getLatitude(), d.getUser().getLongitude())))
                     .orElseThrow();
 
             sorted.add(nearest);
             deliveries.remove(nearest);
 
-            currentLat = nearest.getLatitude();
-            currentLon = nearest.getLongitude();
+            currentLat = nearest.getUser().getLatitude();
+            currentLon = nearest.getUser().getLongitude();
         }
         // Assign sequence order
         for (int i = 0; i < sorted.size(); i++) {
@@ -66,7 +66,7 @@ public class TourOptimizer {
         // Create a combined list with warehouse at start
         List<double[]> points = new ArrayList<>();
         points.add(new double[]{startLat, startLon});
-        deliveries.forEach(d -> points.add(new double[]{d.getLatitude(), d.getLongitude()}));
+        deliveries.forEach(d -> points.add(new double[]{d.getUser().getLatitude(), d.getUser().getLongitude()}));
 
         // Stream over consecutive pairs
         return IntStream.range(0, points.size() - 1)

@@ -1,9 +1,9 @@
 package com.transports.transport.repository;
 
-import com.transports.transport.entities.User;
+import com.transports.transport.entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<Customer, Long> {
 }

@@ -1,6 +1,6 @@
 package com.transports.transport.DTOS;
 
-import com.transports.transport.entities.User;
+import com.transports.transport.entities.Customer;
 import com.transports.transport.enums.DeliveryStatus;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class DelivaryDto {
     private String address;
 
     @NotBlank(message = "user is required", groups = {create.class, update.class})
-    private User user;
+    private Customer user;
 
     @NotNull(groups = create.class, message = "Weight is required")
     @Positive(message = "Weight must be positive", groups = {create.class, update.class})

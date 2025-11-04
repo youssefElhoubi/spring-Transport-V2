@@ -13,8 +13,7 @@ public class DeliveryMapperImpl implements DeliveryMaper {
         Delivery delivery = new Delivery();
 
         delivery.setAddress(dto.getAddress());
-        delivery.setLatitude(dto.getLatitude());
-        delivery.setLongitude(dto.getLongitude());
+        delivery.setUser(dto.getUser());
         delivery.setWeight(dto.getWeight());
         delivery.setVolume(dto.getVolume());
         delivery.setPreferredTimeSlot(dto.getPreferredTimeSlot());
@@ -36,8 +35,7 @@ public class DeliveryMapperImpl implements DeliveryMaper {
         DelivaryDto dto = new DelivaryDto();
 
         dto.setAddress(entity.getAddress());
-        dto.setLatitude(entity.getLatitude());
-        dto.setLongitude(entity.getLongitude());
+        dto.setUser(entity.getUser());
         dto.setWeight(entity.getWeight());
         dto.setVolume(entity.getVolume());
         dto.setPreferredTimeSlot(entity.getPreferredTimeSlot());

@@ -2,7 +2,7 @@ package com.transports.transport.service;
 
 import com.transports.transport.DTOS.UserDto;
 import com.transports.transport.MapperImplementation.UserMapperImpl;
-import com.transports.transport.entities.User;
+import com.transports.transport.entities.Customer;
 import com.transports.transport.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,17 +23,17 @@ public class UserService {
     }
 
     public List<UserDto> findAll() {
-        List<User> users = userRepository.findAll();
+        List<Customer> users = userRepository.findAll();
         return users.stream().map(this.userMapperImpl::toDto).toList();
     }
     public UserDto findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(()->
+        Customer user = userRepository.findById(id).orElseThrow(()->
                 new RuntimeException("user was not found ")
         );
         return this.userMapperImpl.toDto(user);
     }
     public UserDto addUser(UserDto userDto) {
-        User user = userMapperImpl.toEntity(userDto);
+        Customer user = userMapperImpl.toEntity(userDto);
         user = userRepository.save(user);
         return this.userMapperImpl.toDto(user);
     }

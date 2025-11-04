@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "user")
-public class User {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +21,6 @@ public class User {
     private Double latitude;
     private Double longitude;
     private LocalDateTime preferredTimeSlot;
-
     @OneToMany
     List<Delivery> deliveries;
 }

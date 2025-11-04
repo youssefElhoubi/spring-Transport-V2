@@ -2,13 +2,13 @@ package com.transports.transport.MapperImplementation;
 
 import com.transports.transport.DTOS.UserDto;
 import com.transports.transport.Mapers.UserMapper;
-import com.transports.transport.entities.User;
+import com.transports.transport.entities.Customer;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapperImpl implements UserMapper {
     @Override
-    public UserDto toDto(User user) {
+    public UserDto toDto(Customer user) {
         return UserDto.builder()
                 .name(user.getName())
                 .latitude(user.getLatitude())
@@ -18,8 +18,8 @@ public class UserMapperImpl implements UserMapper {
                 .build();
     }
     @Override
-    public User toEntity(UserDto userDto) {
-        return User.builder()
+    public Customer toEntity(UserDto userDto) {
+        return Customer.builder()
                 .name(userDto.getName())
                 .latitude(userDto.getLatitude())
                 .longitude(userDto.getLongitude())

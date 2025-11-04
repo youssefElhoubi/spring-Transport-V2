@@ -19,8 +19,8 @@ public class Delivery {
 
     private String address;
 
-    @ManyToOne
-    @JoinColumn( name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
     private Customer user;
 
     private Double weight;

@@ -11,28 +11,28 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class CustomerDTO {
+    public interface create{}
+    public interface update{}
 
-    private Long id;
-
-    @NotBlank(message = "Name is required")
-    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
+    @NotBlank(message = "Name is required", groups = {create.class})
+    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters" , groups = {create.class,update.class})
     private String name;
 
-    @NotBlank(message = "Address is required")
-    @Size(min = 5, max = 255, message = "Address must be between 5 and 255 characters")
+    @NotBlank(message = "Address is required" , groups = {create.class})
+    @Size(min = 5, max = 255, message = "Address must be between 5 and 255 characters", groups = {create.class,update.class})
     private String address;
 
-    @NotNull(message = "Latitude is required")
-    @DecimalMin(value = "-90.0", message = "Latitude cannot be less than -90")
-    @DecimalMax(value = "90.0", message = "Latitude cannot be greater than 90")
+    @NotNull(message = "Latitude is required", groups = {create.class})
+    @DecimalMin(value = "-90.0", message = "Latitude cannot be less than -90", groups = {create.class,update.class})
+    @DecimalMax(value = "90.0", message = "Latitude cannot be greater than 90", groups = {create.class,update.class})
     private Double latitude;
 
-    @NotNull(message = "Longitude is required")
-    @DecimalMin(value = "-180.0", message = "Longitude cannot be less than -180")
-    @DecimalMax(value = "180.0", message = "Longitude cannot be greater than 180")
+    @NotNull(message = "Longitude is required", groups = {create.class})
+    @DecimalMin(value = "-180.0", message = "Longitude cannot be less than -180", groups = {create.class,update.class})
+    @DecimalMax(value = "180.0", message = "Longitude cannot be greater than 180", groups = {create.class,update.class})
     private Double longitude;
 
-    @FutureOrPresent(message = "Preferred time slot must be in the present or future")
+    @FutureOrPresent(message = "Preferred time slot must be in the present or future", groups = {create.class,update.class})
     private LocalDateTime preferredTimeSlot;
 
     // You usually don’t validate relationships in a DTO like this;

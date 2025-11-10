@@ -3,21 +3,19 @@ package com.transports.transport.service;
 import com.transports.transport.DTOS.UserDto;
 import com.transports.transport.MapperImplementation.UserMapperImpl;
 import com.transports.transport.entities.Customer;
-import com.transports.transport.repository.UserRepository;
+import com.transports.transport.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UserService {
-    public final UserRepository userRepository;
+public class CustomerService {
+    public final CustomerRepository userRepository;
     public final UserMapperImpl userMapperImpl;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapperImpl userMapperImpl) {
+    public CustomerService(CustomerRepository userRepository, UserMapperImpl userMapperImpl) {
         this.userRepository = userRepository;
         this.userMapperImpl = userMapperImpl;
     }

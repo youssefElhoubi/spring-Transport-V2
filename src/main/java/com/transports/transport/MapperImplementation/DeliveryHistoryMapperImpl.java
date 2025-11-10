@@ -1,11 +1,12 @@
 package com.transports.transport.MapperImplementation;
 
 import com.transports.transport.DTOS.DeliveryHistoryDTO;
+import com.transports.transport.Mapers.DeliveryHistoryMapper;
 import com.transports.transport.entities.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DeliveryHistoryMapper {
+public class DeliveryHistoryMapperImpl implements DeliveryHistoryMapper {
 
     public DeliveryHistory toEntity(DeliveryHistoryDTO dto, Customer customer, Tour tour) {
         if (dto == null) return null;
@@ -20,8 +21,8 @@ public class DeliveryHistoryMapper {
                 .dayOfWeek(dto.getDayOfWeek())
                 .build();
     }
-
-    public DeliveryHistoryDTO toDTO(DeliveryHistory entity) {
+    @Override
+    public DeliveryHistoryDTO toDto(DeliveryHistory entity) {
         if (entity == null) return null;
 
         return DeliveryHistoryDTO.builder()

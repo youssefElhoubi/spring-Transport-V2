@@ -1,7 +1,7 @@
 package com.transports.transport.service;
 
-import com.transports.transport.DTOS.UserDto;
-import com.transports.transport.MapperImplementation.UserMapperImpl;
+import com.transports.transport.DTOS.CustomerDTO;
+import com.transports.transport.MapperImplementation.CustomerMapperImpl;
 import com.transports.transport.entities.Customer;
 import com.transports.transport.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,29 +11,29 @@ import java.util.List;
 
 @Service
 public class CustomerService {
-    public final CustomerRepository userRepository;
-    public final UserMapperImpl userMapperImpl;
+    public final CustomerRepository CustomerRepository;
+    public final CustomerMapperImpl customerMapperImpl;
 
     @Autowired
-    public CustomerService(CustomerRepository userRepository, UserMapperImpl userMapperImpl) {
-        this.userRepository = userRepository;
-        this.userMapperImpl = userMapperImpl;
+    public CustomerService(CustomerRepository CustomerRepository, CustomerMapperImpl customerMapperImpl) {
+        this.CustomerRepository = CustomerRepository;
+        this.customerMapperImpl = customerMapperImpl;
     }
 
-    public List<UserDto> findAll() {
-        List<Customer> users = userRepository.findAll();
-        return users.stream().map(this.userMapperImpl::toDto).toList();
+    public List<CustomerDTO> findAll() {
+        List<Customer> users = CustomerRepository.findAll();
+        return users.stream().map(this.customerMapperImpl::toDTO).toList();
     }
-    public UserDto findById(Long id) {
-        Customer user = userRepository.findById(id).orElseThrow(()->
+    public CustomerDTO findById(Long id) {
+        Customer user = CustomerRepository.findById(id).orElseThrow(()->
                 new RuntimeException("user was not found ")
         );
-        return this.userMapperImpl.toDto(user);
+        return this.customerMapperImpl.toDTO(user);
     }
-    public UserDto addUser(UserDto userDto) {
-        Customer user = userMapperImpl.toEntity(userDto);
-        user = userRepository.save(user);
-        return this.userMapperImpl.toDto(user);
+    public CustomerDTO addUser(CustomerDTO CustomerDTO) {
+        Customer user = customerMapperImpl.toEntity(CustomerDTO);
+        user = CustomerRepository.save(user);
+        return this.customerMapperImpl.toDTO(user);
     }
 
 }

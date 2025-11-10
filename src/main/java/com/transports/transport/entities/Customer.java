@@ -25,5 +25,5 @@ public class Customer {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     List<Delivery> deliveries;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Delivery> deliveriesHistory;
+    private List<DeliveryHistory> deliveriesHistory;
 }

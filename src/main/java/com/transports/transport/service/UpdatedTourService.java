@@ -43,7 +43,7 @@ public class UpdatedTourService extends TourService {
                         .actualTime(LocalTime.now())
                         .dayOfWeek(LocalDate.now().getDayOfWeek())
                         .build();
-
+                deliveryHistoryRepository.save(deliveryHistory);
             });
         }
         return tourRepository.save(tour);

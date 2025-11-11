@@ -8,7 +8,7 @@ import com.transports.transport.entities.DeliveryHistory;
 import com.transports.transport.entities.Tour;
 import com.transports.transport.repository.CustomerRepository;
 import com.transports.transport.repository.DeliveryHistoryRepository;
-import com.transports.transport.repository.tourRepository;
+import com.transports.transport.repository.TourRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class DeliveryHistoryService {
 
     private final DeliveryHistoryRepository deliveryHistoryRepository;
     private final CustomerRepository customerRepository;
-    private final tourRepository TourRepository;
+    private final TourRepository TourRepository;
     private final DeliveryHistoryMapperImpl mapper;
 
     // 🔹 CREATE

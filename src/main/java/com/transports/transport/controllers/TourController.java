@@ -5,6 +5,7 @@ import com.transports.transport.MapperImplementation.TourMapperImpl;
 import com.transports.transport.entities.Delivery;
 import com.transports.transport.entities.Tour;
 import com.transports.transport.service.TourService;
+import com.transports.transport.service.UpdatedTourService;
 import com.transports.transport.utils.TourOptimizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/tour")
 public class TourController {
-    private final TourService tourService;
+    private final UpdatedTourService tourService;
     private final TourMapperImpl tourMapper;
 
     @Autowired
-    public TourController(TourService tourService, TourMapperImpl tourMapper) {
+    public TourController(UpdatedTourService tourService, TourMapperImpl tourMapper) {
         this.tourService=tourService;
         this.tourMapper =tourMapper;
     }

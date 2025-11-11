@@ -13,28 +13,30 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Builder
 public class DeliveryHistoryDTO {
+    public interface create{}
+    public interface update{}
 
     // --- RELATION IDs (instead of full objects) ---
-    @NotNull(message = "Customer ID is required")
+    @NotNull(message = "Customer ID is required" , groups = {create.class, update.class})
     private Long customerId;
 
-    @NotNull(message = "Tour ID is required")
+    @NotNull(message = "Tour ID is required", groups = {create.class, update.class})
     private Long tourId;
 
     // --- DELIVERY DATA ---
-    @NotNull(message = "Date of delivery is required")
-    @PastOrPresent(message = "Date of delivery cannot be in the future")
+    @NotNull(message = "Date of delivery is required" , groups = {create.class})
+    @PastOrPresent(message = "Date of delivery cannot be in the future" , groups = { update.class})
     private LocalDate date;
 
-    @NotNull(message = "Planned time is required")
+    @NotNull(message = "Planned time is required" , groups = {create.class, update.class})
     private LocalTime plannedTime;
 
-    @NotNull(message = "Actual time is required")
+    @NotNull(message = "Actual time is required" , groups = {create.class, update.class})
     private LocalTime actualTime;
 
-    @PositiveOrZero(message = "Delay cannot be negative")
+    @PositiveOrZero(message = "Delay cannot be negative", groups = {create.class, update.class})
     private Long delay;
 
-    @NotNull(message = "Day of the week is required")
+    @NotNull(message = "Day of the week is required", groups = {create.class,})
     private DayOfWeek dayOfWeek;
 }

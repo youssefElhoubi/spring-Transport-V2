@@ -1,7 +1,7 @@
 package com.transports.transport.service;
 
 import com.transports.transport.entities.Tour;
-import com.transports.transport.repository.tourRepository;
+import com.transports.transport.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import java.util.List;
 
 @Service
 public class TourService {
-    private tourRepository tourRepository;
+    protected TourRepository tourRepository;
 
     @Autowired
-    public TourService(tourRepository tourRepository) {
+    public TourService(TourRepository tourRepository) {
         this.tourRepository = tourRepository;
     }
     // Get all tours
@@ -43,6 +43,8 @@ public class TourService {
         tour.setWarehouse(t.getWarehouse());
         tour.setTotalDistance(t.getTotalDistance());
         tour.setId(t.getId());
+
+
 
         return tourRepository.save(tour);
     }

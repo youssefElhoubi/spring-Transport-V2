@@ -4,6 +4,7 @@ import com.transports.transport.DTOS.CustomerDTO;
 import com.transports.transport.Mapers.CustomerMapper;
 import com.transports.transport.entities.Customer;
 import com.transports.transport.entities.Delivery;
+import com.transports.transport.entities.DeliveryHistory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,9 +40,9 @@ public class CustomerMapperImpl implements CustomerMapper {
         }
 
         if (dto.getDeliveriesHistoryIds() != null) {
-            List<Delivery> deliveriesHistory = dto.getDeliveriesHistoryIds().stream()
+            List<DeliveryHistory> deliveriesHistory = dto.getDeliveriesHistoryIds().stream()
                     .map(id -> {
-                        Delivery d = new Delivery();
+                        DeliveryHistory d = new DeliveryHistory();
                         d.setId(id);
                         return d;
                     })
@@ -76,7 +77,7 @@ public class CustomerMapperImpl implements CustomerMapper {
         if (customer.getDeliveriesHistory() != null) {
             dto.setDeliveriesHistoryIds(
                     customer.getDeliveriesHistory().stream()
-                            .map(Delivery::getId)
+                            .map(DeliveryHistory::getId)
                             .collect(Collectors.toList())
             );
         }

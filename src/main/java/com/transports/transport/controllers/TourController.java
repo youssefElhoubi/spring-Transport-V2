@@ -1,9 +1,14 @@
 package com.transports.transport.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.transports.transport.DTOS.TourDto;
 import com.transports.transport.MapperImplementation.TourMapperImpl;
 import com.transports.transport.entities.Delivery;
 import com.transports.transport.entities.Tour;
+import com.transports.transport.entities.Vehicul;
+import com.transports.transport.entities.Warehouse;
+import com.transports.transport.enums.DeliveryStatus;
+import com.transports.transport.service.RouteOptimizationService;
 import com.transports.transport.service.TourService;
 import com.transports.transport.service.UpdatedTourService;
 import com.transports.transport.utils.TourOptimizer;
@@ -20,11 +25,13 @@ import java.util.List;
 public class TourController {
     private final UpdatedTourService tourService;
     private final TourMapperImpl tourMapper;
+    private final RouteOptimizationService routeOptimizationService;
 
     @Autowired
-    public TourController(UpdatedTourService tourService, TourMapperImpl tourMapper) {
+    public TourController(UpdatedTourService tourService, TourMapperImpl tourMapper, RouteOptimizationService routeOptimizationService) {
         this.tourService=tourService;
         this.tourMapper =tourMapper;
+        this.routeOptimizationService = routeOptimizationService;
     }
     @GetMapping("/all")
     public List<Tour> all() {
@@ -63,6 +70,14 @@ public class TourController {
         response.put("massage","list of the optimize Delivery points");
         response.put("points",optimizeDiliveis);
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("optimizer/ai/{id}")
+    public List<Delivery> AiOptimizer(@PathVariable Long id) throws JsonProcessingException {
+        Tour tour = tourService.findById(id);
+        List<Delivery> pendingDeliveries = tour.getDeliveries().stream().filter(d-> d.getStatus()== DeliveryStatus.PENDING).toList();
+        Warehouse warehouse = tour.getWarehouse();
+        Vehicul vehicul = tour.getVehicle();
+        return routeOptimizationService.optimizeDeliveries(warehouse,pendingDeliveries,vehicul);
     }
     @GetMapping("total/{id}")
     public  ResponseEntity<?> totalDistance(@PathVariable Long id){

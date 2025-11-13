@@ -85,6 +85,11 @@ public class TourController {
         Double distance = TourOptimizer.totalDistance(tour);
         return ResponseEntity.ok(distance);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> addDeliveries(@PathVariable Long id, @RequestBody List<Long> deliveries) {
+        tourService.AddDelivaries( deliveries,id);
+        return ResponseEntity.ok("deliveries added");
+    }
 
 
 }

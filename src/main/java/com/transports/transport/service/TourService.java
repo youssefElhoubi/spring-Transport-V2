@@ -1,6 +1,8 @@
 package com.transports.transport.service;
 
+import com.transports.transport.entities.Delivery;
 import com.transports.transport.entities.Tour;
+import com.transports.transport.repository.DeliveryRepository;
 import com.transports.transport.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +12,11 @@ import java.util.List;
 @Service
 public class TourService {
     protected TourRepository tourRepository;
+    private DeliveryRepository deliveryRepository;
 
     @Autowired
-    public TourService(TourRepository tourRepository) {
+    public TourService(TourRepository tourRepository, DeliveryRepository deliveryRepository) {
+        this.deliveryRepository = deliveryRepository;
         this.tourRepository = tourRepository;
     }
     // Get all tours
@@ -55,6 +59,12 @@ public class TourService {
             throw new RuntimeException("Tour not found with ID: " + id);
         }
         tourRepository.deleteById(id);
+    }
+    public void AddDelivaries(List<Long> delivaries,Long tourID) {
+        List<Delivery> deliveries = delivaries.stream().map(d->deliveryRepository.findById(d).orElseThrow( ()-> new RuntimeException("delivarie with Id "+d+" was not found") )).toList();
+        Tour tour = findById(tourID);
+        tour.getDeliveries().addAll(deliveries);
+        tourRepository.save(tour);
     }
 
 }

@@ -1,6 +1,10 @@
 package com.transports.transport.service;
 
+import com.transports.transport.DTOS.DelivaryDto;
+import com.transports.transport.MapperImplementation.DeliveryMapperImpl;
+import com.transports.transport.entities.Customer;
 import com.transports.transport.entities.Delivery;
+import com.transports.transport.repository.CustomerRepository;
 import com.transports.transport.repository.DeliveryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +14,14 @@ import java.util.List;
 @Service
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
+    private final CustomerRepository customerRepository;
+    private  final DeliveryMapperImpl deliveryMapperImpl;
 
     @Autowired
-    public DeliveryService(DeliveryRepository deliveryrepository) {
+    public DeliveryService(DeliveryRepository deliveryrepository, CustomerRepository customerrepository, DeliveryMapperImpl deliveryMapperImpl) {
+        this.customerRepository = customerrepository;
         this.deliveryRepository = deliveryrepository;
+        this.deliveryMapperImpl = deliveryMapperImpl;
     }
 
     public List<Delivery> findAll() {
@@ -24,8 +32,10 @@ public class DeliveryService {
         return deliveryRepository.findById(id).orElseThrow(() -> new RuntimeException("no Delivery found with this ID" + id));
     }
 
-    public Delivery save(Delivery d) {
-        return deliveryRepository.save(d);
+    public Delivery save(DelivaryDto d) {
+        Customer customer = customerRepository.findById(d.getCustomerId()).orElseThrow( () -> new RuntimeException("no Customer found with this ID" + d.getCustomerId()));
+        Delivery delivery = deliveryMapperImpl.toEntity(d, customer);
+        return deliveryRepository.save(delivery);
     }
 
     public Delivery update(Delivery d) {

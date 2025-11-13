@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/vehicul")
+    @RequestMapping("/vehicul")
 public class VehiculController {
     private final VehiculMapperImpl vehiculMapper;
     private final VehiculService vehiculService;

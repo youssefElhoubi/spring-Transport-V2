@@ -1,7 +1,6 @@
 package com.transports.transport.controllers;
 
 import com.transports.transport.DTOS.DelivaryDto;
-import com.transports.transport.Mapers.DeliveryMaper;
 import com.transports.transport.MapperImplementation.DeliveryMapperImpl;
 import com.transports.transport.entities.Delivery;
 import com.transports.transport.service.DeliveryService;
@@ -26,7 +25,7 @@ import java.util.List;
 public class DeliveryController {
 
     private final DeliveryService deliverySer;
-    private final DeliveryMaper deliveryMaper;
+    private final DeliveryMapperImpl deliveryMaper;
     @Autowired
     public DeliveryController(DeliveryService deliveryService, DeliveryMapperImpl deliveryMaper) {
         this.deliverySer = deliveryService;
@@ -62,7 +61,7 @@ public class DeliveryController {
     })
     @PostMapping
     public ResponseEntity<?> create(
-            @Validated(DelivaryDto.create.class)
+
             @RequestBody(
                     description = "JSON object containing delivery data",
                     required = true,
@@ -83,8 +82,7 @@ public class DeliveryController {
             )
             @org.springframework.web.bind.annotation.RequestBody DelivaryDto dto) {
 
-        Delivery delivary = deliveryMaper.toEntity(dto);
-        delivary = deliverySer.save(delivary);
+        Delivery delivary = deliverySer.save(dto);
         return ResponseEntity.ok(delivary);
     }
 
@@ -102,7 +100,6 @@ public class DeliveryController {
     })
     @PatchMapping("/{id}")
     public ResponseEntity<?> update(
-            @Validated(DelivaryDto.update.class)
             @RequestBody(
                     description = "JSON object containing updated delivery data",
                     required = true,
@@ -126,7 +123,6 @@ public class DeliveryController {
         if (delivery == null) {
             return ResponseEntity.notFound().build();
         }
-        delivery = deliveryMaper.toEntity(dto);
         delivery.setId(id);
         delivery = deliverySer.update(delivery);
         return ResponseEntity.ok(delivery);

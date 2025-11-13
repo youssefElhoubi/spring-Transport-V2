@@ -35,7 +35,7 @@ public class Delivery {
     private Integer sequenceOrder;
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", nullable = false)
+    @JoinColumn(name = "tour_id", nullable = true)
     private Tour tour;
 
 
